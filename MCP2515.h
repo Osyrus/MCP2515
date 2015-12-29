@@ -32,7 +32,6 @@
 
 // Packets buffer length
 #define MAX_PACKETS_TX 10
-#define MAX_PACKETS_RX 10
 
 // This is the packet that is used to facilitate sending and receiving data
 // on the CAN bus. Using packets allows for queuing.
@@ -44,6 +43,11 @@ struct packet {
 };
 
 typedef void (* receiver)(uint16_t senderId, uint8_t *data, uint8_t length);
+// This union is used to join together two bytes into one int
+union TwoByte {
+  uint8_t b[2];
+  uint16_t value;
+};
 
 class MCP2515
 {
@@ -68,9 +72,8 @@ class MCP2515
 
     uint8_t readShortCommand(uint8_t command);
 
-    uint8_t data[8];
     packet _sendPackets[MAX_PACKETS_TX];
-    packet _receivedPackets[MAX_PACKETS_RX];
+    packet _readPackets[2];
 
     receiver _receiver;
 

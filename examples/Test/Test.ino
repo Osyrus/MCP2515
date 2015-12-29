@@ -1,6 +1,6 @@
 #include "MCP2515.h"
 
-MCP2515 can(12);
+MCP2515 can();
 
 void setup() {
   // put your setup code here, to run once:
